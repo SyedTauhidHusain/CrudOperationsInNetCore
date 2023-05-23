@@ -55,12 +55,9 @@ namespace CrudOperationsInNetCore.Controllers
 
         //update existing record
         [HttpPut]
-        public async Task<IActionResult> PutBrand(int id, Brand brand)
+        public async Task<IActionResult> PutBrand(Brand brand)
         {
-            if(id != brand.ID)
-            {
-                return BadRequest();
-            }
+            
             _dbContext.Entry(brand).State = EntityState.Modified;
             try
             {
@@ -68,7 +65,7 @@ namespace CrudOperationsInNetCore.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BrandAvailable(id))
+                if (!BrandAvailable(brand.ID))
                 {
                     return NotFound();
                 }
